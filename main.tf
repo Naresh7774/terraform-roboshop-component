@@ -100,4 +100,14 @@ resource "aws_launch_template" "main" {
     )
   }
 
- 
+  # tags attached to the volume created by instance
+  tag_specifications {
+    resource_type = "volume"
+
+    tags = merge(
+      local.common_tags,
+      {
+        Name = "${local.common_name_suffix}-${var.component}"
+      }
+    )
+  }
