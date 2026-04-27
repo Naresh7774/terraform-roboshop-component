@@ -19,4 +19,14 @@ resource "terraform_data" "main" {
     aws_instance.main.id
   ]
   
- 
+  connection {
+    type     = "ssh"
+    user     = "ec2-user"
+    password = "DevOps321"
+    host     = aws_instance.main.private_ip
+  }
+
+  provisioner "file" {
+    source = "bootstrap.sh"
+    destination = "/tmp/bootstrap.sh"
+  }
