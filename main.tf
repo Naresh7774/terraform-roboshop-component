@@ -45,3 +45,15 @@ resource "aws_ec2_instance_state" "main" {
   depends_on = [terraform_data.main]
 }
 
+resource "aws_ami_from_instance" "main" {
+  name               = "${local.common_name_suffix}-${var.component}-ami"
+  source_instance_id = aws_instance.main.id
+  depends_on = [aws_ec2_instance_state.main]
+  tags = merge (
+        local.common_tags,
+        {
+            Name = "${local.common_name_suffix}-${var.component}-ami" # roboshop-dev-mongodb
+        }
+  )
+}
+
