@@ -92,3 +92,12 @@ resource "aws_launch_template" "main" {
   tag_specifications {
     resource_type = "instance"
 
+    tags = merge(
+      local.common_tags,
+      {
+        Name = "${local.common_name_suffix}-${var.component}"
+      }
+    )
+  }
+
+ 
