@@ -39,3 +39,9 @@ resource "terraform_data" "main" {
   }
 }
 
+resource "aws_ec2_instance_state" "main" {
+  instance_id = aws_instance.main.id
+  state       = "stopped"
+  depends_on = [terraform_data.main]
+}
+
