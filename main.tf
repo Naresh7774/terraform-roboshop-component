@@ -180,3 +180,13 @@ resource "aws_autoscaling_policy" "main" {
     target_value = 75.0
   }
 }
+
+
+resource "aws_lb_listener_rule" "main" {
+  listener_arn = local.listener_arn
+  priority     = var.rule_priority
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.main.arn
+  }
