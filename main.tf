@@ -111,3 +111,12 @@ resource "aws_launch_template" "main" {
       }
     )
   }
+  # tags attached to the launch template
+  tags = merge(
+      local.common_tags,
+      {
+        Name = "${local.common_name_suffix}-${var.component}"
+      }
+  )
+
+}
