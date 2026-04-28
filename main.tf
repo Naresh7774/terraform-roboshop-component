@@ -204,3 +204,10 @@ resource "terraform_data" "main_local" {
   triggers_replace = [
     aws_instance.main.id
   ]
+
+
+  depends_on = [aws_autoscaling_policy.main]
+  provisioner "local-exec" {
+    command = "aws ec2 terminate-instances --instance-ids ${aws_instance.main.id}"
+  }
+}
