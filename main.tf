@@ -145,3 +145,17 @@ resource "aws_autoscaling_group" "main" {
     triggers = ["launch_template"]
   }
   
+
+  dynamic "tag" {  # we will get the iterator with name as tag
+    for_each = merge(
+      local.common_tags,
+      {
+        Name = "${local.common_name_suffix}-${var.component}"
+      }
+    )
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
+  }
